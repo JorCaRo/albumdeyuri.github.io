@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Álbum de fotos de Yuri</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Álbum de fotos de Yuri</h1>
+            <div class="menu">
+                <div class="add-section">
+                    <button id="addSectionButton">+ Añadir Apartado</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="photo-sections">
+            <!-- Aquí se agregarán dinámicamente los apartados de fotos -->
+        </section>
+
+        <section id="upload-section">
+            <h2>Subir una nueva foto</h2>
+            <form id="uploadForm">
+                <input type="text" id="photoTitle" placeholder="Título de la foto" required>
+                <textarea id="photoDescription" placeholder="Descripción de la foto" required></textarea>
+                <input type="file" id="photoFile" accept="image/*" required>
+                <button type="submit">Subir Foto</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
