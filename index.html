@@ -11,6 +11,9 @@
         <div class="header-content">
             <h1>Álbum de fotos de Yuri</h1>
             <div class="menu">
+                <div class="sections">
+                    <!-- Aquí se agregarán las pestañas de los apartados -->
+                </div>
                 <div class="add-section">
                     <button id="addSectionButton">+ Añadir Apartado</button>
                 </div>
@@ -18,21 +21,51 @@
         </div>
     </header>
 
-    <main>
-        <section id="photo-sections">
-            <!-- Aquí se agregarán dinámicamente los apartados de fotos -->
+    <main id="main-content">
+        <!-- Interfaz inicial sin apartados -->
+        <section id="initial-section">
+            <p>Selecciona o crea un apartado para comenzar.</p>
         </section>
 
-        <section id="upload-section">
-            <h2>Subir una nueva foto</h2>
+        <!-- Aquí se mostrará el contenido de un apartado cuando sea seleccionado -->
+        <section id="album-section" style="display: none;">
+            <h2 id="album-title"></h2>
+            <div id="photo-sections">
+                <!-- Aquí se agregarán dinámicamente las fotos -->
+            </div>
+            <button id="uploadPhotoButton">Subir Foto</button>
+        </section>
+    </main>
+
+    <!-- Interfaz para agregar un nuevo apartado -->
+    <div id="addSectionModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeAddSectionModal">&times;</span>
+            <h2>Crear Nuevo Apartado</h2>
+            <form id="addSectionForm">
+                <input type="text" id="sectionName" placeholder="Nombre del Apartado" required>
+                <label for="sectionColor">Selecciona un color:</label>
+                <input type="color" id="sectionColor" value="#ff0000" required>
+                <button type="submit">Crear Apartado</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Interfaz para subir una nueva foto -->
+    <div id="uploadPhotoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeUploadPhotoModal">&times;</span>
+            <h2>Subir Nueva Foto</h2>
             <form id="uploadForm">
                 <input type="text" id="photoTitle" placeholder="Título de la foto" required>
                 <textarea id="photoDescription" placeholder="Descripción de la foto" required></textarea>
                 <input type="file" id="photoFile" accept="image/*" required>
+                <label for="photoBoxColor">Color del recuadro:</label>
+                <input type="color" id="photoBoxColor" value="#ffffff" required>
                 <button type="submit">Subir Foto</button>
             </form>
-        </section>
-    </main>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

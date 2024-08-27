@@ -1,68 +1,106 @@
-body {
-    font-family: Arial, sans-serif;
-    background-image: url('https://upload.wikimedia.org/wikipedia/en/f/f3/Flag_of_Russia.svg');
-    background-size: cover;
-    margin: 0;
-    padding: 0;
-    color: #fff;
-}
+document.addEventListener('DOMContentLoaded', function() {
+    const sections = document.querySelector('.sections');
+    const addSectionModal = document.getElementById('addSectionModal');
+    const uploadPhotoModal = document.getElementById('uploadPhotoModal');
+    const addSectionButton = document.getElementById('addSectionButton');
+    const closeAddSectionModal = document.getElementById('closeAddSectionModal');
+    const closeUploadPhotoModal = document.getElementById('closeUploadPhotoModal');
+    const addSectionForm = document.getElementById('addSectionForm');
+    const uploadForm = document.getElementById('uploadForm');
+    const mainContent = document.getElementById('main-content');
+    const initialSection = document.getElementById('initial-section');
+    const albumSection = document.getElementById('album-section');
+    const albumTitle = document.getElementById('album-title');
+    const photoSections = document.getElementById('photo-sections');
+    const uploadPhotoButton = document.getElementById('uploadPhotoButton');
 
-header {
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    let currentAlbumName = '';
 
-.header-content h1 {
-    margin: 0;
-}
+    // Abrir el modal para añadir un apartado
+    addSectionButton.addEventListener('click', function() {
+        addSectionModal.style.display = 'block';
+    });
 
-.menu .add-section button {
-    background-color: #fff;
-    color: #000;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-}
+    // Cerrar el modal de añadir un apartado
+    closeAddSectionModal.addEventListener('click', function() {
+        addSectionModal.style.display = 'none';
+    });
 
-main {
-    padding: 20px;
-}
+    // Cerrar el modal de subir una foto
+    closeUploadPhotoModal.addEventListener('click', function() {
+        uploadPhotoModal.style.display = 'none';
+    });
 
-#upload-section {
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 20px;
-    border-radius: 10px;
-    margin-top: 20px;
-}
+    // Añadir un nuevo apartado
+    addSectionForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const sectionName = document.getElementById('sectionName').value;
+        const sectionColor = document.getElementById('sectionColor').value;
 
-#photo-sections {
-    display: flex;
-    flex-wrap: wrap;
-}
+        const newTab = document.createElement('button');
+        newTab.classList.add('section-tab');
+        newTab.style.backgroundColor = sectionColor;
+        newTab.textContent = sectionName;
+        newTab.addEventListener('click', function() {
+            enterAlbumSection(sectionName);
+        });
 
-.photo-section {
-    background-color: rgba(255, 255, 255, 0.8);
-    margin: 10px;
-    padding: 10px;
-    border-radius: 10px;
-    width: 200px;
-}
+        sections.appendChild(newTab);
+        addSectionModal.style.display = 'none';
+    });
 
-.photo-section img {
-    max-width: 100%;
-    border-radius: 10px;
-}
+    // Entrar en un apartado
+    function enterAlbumSection(name) {
+        currentAlbumName = name;
+        albumTitle.textContent = `Bienvenido a ${name}`;
+        initialSection.style.display = 'none';
+        albumSection.style.display = 'block';
+    }
 
-.photo-section h3 {
-    color: #000;
-    margin-top: 10px;
-}
+    // Abrir el modal para subir una foto
+    uploadPhotoButton.addEventListener('click', function() {
+        uploadPhotoModal.style.display = 'block';
+    });
 
-.photo-section p {
-    color: #333;
-}
+    // Subir una nueva foto
+    uploadForm.addEventListener('submit', function(event) {
+        event.preventDefault();
 
+        const title = document.getElementById('photoTitle').value;
+        const description = document.getElementById('photoDescription').value;
+        const file = document.getElementById('photoFile').files[0];
+        const boxColor = document.getElementById('photoBoxColor').value;
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const newPhotoSection = document.createElement('div');
+                newPhotoSection.classList.add('photo-section');
+                newPhotoSection.style.backgroundColor = boxColor;
+
+                newPhotoSection.innerHTML = `
+                    <img src="${e.target.result}" alt="${title}">
+                    <h3>${title}</h3>
+                    <p>${description}</p>
+                `;
+
+                photoSections.appendChild(newPhotoSection);
+
+                // Limpiar el formulario y cerrar el modal
+                uploadForm.reset();
+                uploadPhotoModal.style.display = 'none';
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Cerrar modales si se hace clic fuera de ellos
+    window.onclick = function(event) {
+        if (event.target === addSectionModal) {
+            addSectionModal.style.display = 'none';
+        }
+        if (event.target === uploadPhotoModal) {
+            uploadPhotoModal.style.display = 'none';
+        }
+    };
+});
